@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vevgo Grocery
 
-## Getting Started
+Vevgo Grocery is a grocery ordering prototype I built to show how a customer
+places an order, and how the vendor and rider handle it from start to finish.
 
-First, run the development server:
+## Features
+
+**Customer**
+
+- Browse products, search and filter by category.
+- Add to the cart and change quantities.
+- Check out with delivery details.
+- Track the order and watch its status.
+
+**Vendor** (`/admin`)
+
+- See incoming orders.
+- Accept them and move them along as they're prepared.
+- Mark them ready for pickup.
+
+**Rider** (`/rider`)
+
+- See the orders that are ready for pickup.
+- Accept a delivery.
+- Update the status until it's delivered.
+
+## Built with
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- SQLite / libSQL
+
+## Getting started
 
 ```bash
+git clone https://github.com/javex-12/vevgo.git
+cd vevgo
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser. You'll need
+Node.js 20.9 or newer. The product catalogue is seeded the first time you run it.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The customer picks products, adds them to the cart and submits the order with a
+delivery address.
 
-## Learn More
+The order is saved and shows up on the vendor dashboard. The vendor accepts it,
+prepares it and marks it ready for pickup.
 
-To learn more about Next.js, take a look at the following resources:
+A rider sees it on their board, accepts the delivery and updates the status as
+it goes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The customer follows all of it from the order page.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Rider notifications
 
-## Deploy on Vercel
+For this prototype, the rider board checks for ready orders every five seconds
+while the page is open.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+In production, Firebase Cloud Messaging (FCM) could send a push notification to
+riders the moment an order is ready, even with the dashboard closed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Running the production build
+
+```bash
+npm run build
+npm run start
+```

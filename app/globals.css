@@ -1,26 +1,376 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Material 3 Expressive tokens.
+ * The page stays white and airy — colour lives in the surfaces, containers and
+ * the vivid Vevgo green, never in a heavy background wash.
+ */
+@theme {
+  /* Brand aliases kept for the existing components. */
+  --color-brand: #09c267;
+  --color-brand-dark: #006d3b;
+  --color-brand-soft: #e8f1e5;
+  --color-ink: #171d18;
+  --color-muted: #434b44;
+  --color-line: #e4eae2;
+  --color-canvas: #ffffff;
+
+  /* M3 Expressive roles. */
+  --color-primary: #006d3b;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #9df7b6;
+  --color-on-primary-container: #00210f;
+  --color-surface: #ffffff;
+  --color-surface-container: #e8f1e5;
+  --color-surface-container-high: #dce8d9;
+  --color-outline: #c3cbc1;
+  --color-outline-variant: #eef2ec;
+  --color-on-surface: #171d18;
+  --color-on-surface-variant: #434b44;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-tint-1: #c8f2d4;
+  --color-tint-2: #ffe3b8;
+  --color-tint-3: #cfe4ff;
+  --color-tint-4: #ffd9e2;
+
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0, 0, 1);
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+button,
+a {
+  touch-action: manipulation;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+*:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------- surfaces */
+
+.m3-card {
+  background: var(--color-surface);
+  border-radius: 28px;
+  box-shadow: 0 8px 28px -18px rgba(0, 40, 20, 0.28);
+}
+
+.m3-container {
+  background: var(--color-surface-container);
+  border-radius: 28px;
+}
+
+.m3-hero {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  border-radius: 40px 40px 40px 14px;
+}
+
+/* Asymmetric photo tiles, alternating direction like the M3 catalogue. */
+.tile-m3 {
+  border-radius: 34px 18px 34px 18px;
+  overflow: hidden;
+  transition:
+    border-radius 0.55s var(--ease-spring),
+    transform 0.55s var(--ease-spring);
+}
+
+.tile-m3-b {
+  border-radius: 18px 34px 18px 34px;
+}
+
+/* Only lift on devices with a real pointer — on touch, hover would stick. */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .tile-m3 {
+    border-radius: 44% 44% 44% 44%;
+    transform: rotate(-2deg) scale(1.02);
+  }
+}
+
+/* ----------------------------------------------------------------- buttons */
+
+.btn-primary,
+.btn-tonal,
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 26px;
+  font-weight: 700;
+  transition:
+    transform 0.35s var(--ease-spring),
+    border-radius 0.35s var(--ease-spring),
+    background-color 0.2s linear;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.btn-primary:hover {
+  background: #00562f;
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+  border-radius: 16px;
+}
+
+.btn-tonal {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+.btn-tonal:hover {
+  background: #8fe8a9;
+}
+
+.btn-tonal:active {
+  transform: scale(0.96);
+  border-radius: 16px;
+}
+
+.btn-quiet {
+  background: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+}
+
+.btn-quiet:hover {
+  color: var(--color-on-surface);
+  background: var(--color-surface-container-high);
+}
+
+.btn-primary:disabled,
+.btn-tonal:disabled {
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface-variant);
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ chips */
+
+.chip-m3 {
+  flex: none;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 20px;
+  background: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    border-radius 0.4s var(--ease-spring),
+    transform 0.3s var(--ease-spring),
+    background-color 0.2s linear,
+    color 0.2s linear;
+}
+
+.chip-m3:hover {
+  color: var(--color-on-surface);
+  background: var(--color-surface-container-high);
+}
+
+.chip-m3:active {
+  transform: scale(0.93);
+}
+
+.chip-m3[aria-pressed="true"],
+.chip-m3[aria-selected="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: 12px;
+}
+
+/* ----------------------------------------------------------------- motion */
+
+@keyframes vevgo-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-pop {
+  animation: vevgo-pop 0.42s var(--ease-spring) both;
+}
+
+@keyframes vevgo-slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: vevgo-slide-in 0.42s var(--ease-emphasis) both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.995);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.page-enter {
+  animation: page-enter 0.5s var(--ease-emphasis) both;
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-4deg);
+  }
+}
+
+.animate-float {
+  animation: float-soft 5s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------- preloader */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  animation: intro-lift 0.8s var(--ease-emphasis) forwards;
+  animation-play-state: paused;
+}
+
+.intro--out {
+  animation-play-state: running;
+}
+
+@keyframes intro-lift {
+  0% {
+    transform: translateY(0);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  100% {
+    transform: translateY(-101%);
+    border-bottom-left-radius: 48px;
+    border-bottom-right-radius: 48px;
+  }
+}
+
+.intro__inner {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.intro--out .intro__inner {
+  animation: intro-out 0.4s var(--ease-emphasis) 0.3s forwards;
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.intro__logo {
+  animation: intro-logo 0.8s var(--ease-emphasis) both;
+}
+
+@keyframes intro-logo {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.intro__tag {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  animation: vevgo-pop 0.5s 0.55s var(--ease-spring) both;
+}
+
+.intro__bar {
+  width: 132px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-surface-container-high);
+  overflow: hidden;
+}
+
+.intro__bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--color-primary);
+  animation: intro-fill 1s 0.15s var(--ease-emphasis) forwards;
+}
+
+@keyframes intro-fill {
+  to {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
