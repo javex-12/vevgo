@@ -2,6 +2,7 @@
 
 Vevgo Grocery is a grocery ordering prototype I built to show how a customer
 places an order, and how the vendor and rider handle it from start to finish.
+The live store is at: https://vevgo.vercel.app/
 
 ## Features
 
